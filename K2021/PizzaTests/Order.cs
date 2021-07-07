@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace PizzaTests
 {
-    internal class PizzaOrder
+    internal class Order
     {
-        private readonly Price MinimalOrderValue = new Price(50);
+        //private readonly Price MinimalOrderValue = new Price(50);
 
         private readonly IList<OrderItem> items = new List<OrderItem>();
 
@@ -13,12 +13,17 @@ namespace PizzaTests
         {
             return items != null 
                 && items.Any() 
-                && items.Sum(i=>i.Price.Value) >= MinimalOrderValue.Value;
+                && items.Sum(i=>i.Pieces) % 8 == 0;
         }
 
         public void Add(OrderItem orderItem)
         {
             items.Add(orderItem);
         }
+
+        //internal void Remove(int index)
+        //{
+        //    items.RemoveAt(index);
+        //}
     }
 }
