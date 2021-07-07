@@ -11,8 +11,14 @@ namespace PizzaTests
 
         public bool IsValid()
         {
-            return items != null 
-                && items.Any() 
+            return items != null
+                && items.Any()
+                && items.GroupBy(g => g.PizzaName)
+                    .Select(g => new
+                    {
+                        Name = g.Key,
+                        Pieces = g.Sum(p => p.Pieces)
+                    }).All(g => g.Pieces % 4 == 0)
                 && items.Sum(i=>i.Pieces) % 8 == 0;
         }
 

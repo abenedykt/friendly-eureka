@@ -4,10 +4,10 @@ namespace PizzaTests
 {
     public class OrderTests
     {
-        // when... then...
-        // when... should...
-        // give... should...
-        // given...expect ...
+        // when...  then...
+        // when...  should...
+        // give...  should...
+        // given... expect...
 
         [Fact]
         public void When_order_is_empty_it_should_be_invalid()
@@ -25,21 +25,32 @@ namespace PizzaTests
             order.Add(new OrderItem("Pepperoni", 2, "Marek"));
             order.Add(new OrderItem("Hawajska", 4, "Darek"));
             
-
             Assert.True(order.IsValid());
         }
 
-        // todo 2 peperoni, 2 hawajskie 4, margarity -> valid = false
+        [Fact]
+        public void TODO________________()
+        {
+            var order = new Order();
 
+            order.Add(new OrderItem("Pepperoni", 2, "Arek"));
+            order.Add(new OrderItem("Hawajska", 2, "Marek"));
+            order.Add(new OrderItem("Margharita", 4, "Darek"));
 
-        //-> pepperoni 1/2 * 30
-        //-> hawajska 1/2 * 50
+            Assert.False(order.IsValid());
+        }
 
-        //cena zamówienia = 40 -> ? da się czy się nie da? 
+        [Fact]
+        public void TODO___________________()
+        {
+            var order = new Order();
 
-        //Arek -> 7,50
-        //Marek -> 7,50
-        //Darek -> 25
+            order.Add(new OrderItem("Pepperoni", 4, "Arek"));
+            order.Add(new OrderItem("Hawajska", 4, "Marek"));
+            order.Add(new OrderItem("Margharita", 4, "Darek"));
+
+            Assert.False(order.IsValid());
+        }
 
 
         //[Fact]
