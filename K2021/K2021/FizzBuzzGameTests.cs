@@ -38,5 +38,11 @@ namespace K2021
             var result = _game.Play(15);
             Assert.Equal("Fizz Buzz", result);
         }
+
+        // AAA 
+        
+        // Arrange -> przygotowujemy dane/obiekty
+        // Act -> SUT -> system under test -> akcja testowana
+        // Assert -> sprawdzenie
     }
 }
