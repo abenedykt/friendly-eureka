@@ -1,5 +1,7 @@
 ﻿using NSubstitute;
 using Pizza;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -8,7 +10,7 @@ namespace PizzaTests
     public class Class1
     {
         [Fact]
-        public void Menu()
+        public void NSubstitute_example()
         {
             // przykład użycia mocka!!!
 
@@ -29,8 +31,6 @@ namespace PizzaTests
             menu.Received(1).GetMenu();
         }
 
-
-
         [Fact]
         public void Calculating_order_price()
         {
@@ -38,49 +38,49 @@ namespace PizzaTests
             var menu = Substitute.For<IMenu>();
 
             menu.GetMenu().Returns(new[]{
-                Substitute.For<IMenuPosition>(),
-                Substitute.For<IMenuPosition>(),
-                Substitute.For<IMenuPosition>()
+                new MenuPosition("Hawajska",new Price(60)),
+                new MenuPosition("Domowa",new Price(50)),
+                new MenuPosition("Pepperoni",new Price(20)),
+                new MenuPosition("Margharita",new Price(20))
             });
 
-            //var order = Substitute.For<IOrder>();
-            //order.Items ?
+            var order = Substitute.For<IOrder>();
 
-            //var orderCalculator = new OrderCalculator(menu);
-            
-            //// act
-            //var result = orderCalculator.Calculate(order);
+            var items = new List<IOrderItem>{
+                new OrderItem("Hawajska", 4, "Arek"),
+                new OrderItem("Pepperoni", 4, "Marek"),
+                new OrderItem("Margharita", 8, "Darek")
+            };
+            order.GetEnumerator().Returns(items.GetEnumerator());
 
-            // assert
-            //Assert.Equal(60, result.Value);
+            var orderCalculator = new OrderCalculator(menu);
+
+            // act
+            var result = orderCalculator.Calculate(order);
+
+            //assert
+            Assert.Equal(60, result.Value);
+        }
+    }
+
+           
+
+    internal class MenuPosition : IMenuPosition
+    {
+
+        public MenuPosition(string name, Price price )
+        {
+            Name = name;
+            Price = price;
         }
 
-
-            // klasa do elementów menu z cenami 
-            // ->    słownik -> nazwa pizzy i cena
-
-
-            // pok 1.
-            // słownik -> nazwa pizzy i cena
-            // enum z nazwami pizzy
-            // oddzielna klasa do liczenia ceny
-
-            // pok 2.
-            // klasa do elementów menu z cenami
-            // jakiś obiekt (cena <-> ludzie)
-
-            // pok 3.
-            // słownik -> nazwa pizzy i cena (słownik z ceną mała, średnia, duża)
-            // enum z nazwami pizzy
-
-            // pok 4.
-            // obiekt pizza -> id, cena, nazwa
-            // order item -> pizza i osoba -> cena za order item cena pizzy * il. kawałków
-            // liczyć w order
+        public string Name { get; }
+        public Price Price { get; }
     }
 
     public class OrderCalculator
     {
+        private const int PizzaPieces = 8;
         private readonly IMenu _menu;
 
         public OrderCalculator(IMenu menu)
@@ -90,7 +90,17 @@ namespace PizzaTests
 
         internal Price Calculate(IOrder order)
         {
-            throw new System.NotImplementedException();
+            return new Price(order.Sum(o => o.Pieces * PriceOfSlice(o.PizzaName).Value));
+        }
+
+        private Price PriceOfSlice(string pizzaName)
+        {
+            return new Price(PizzaPrice(pizzaName) / PizzaPieces);
+        }
+
+        private decimal PizzaPrice(string pizzaName)
+        {
+            return _menu.GetMenu().First(x => x.Name == pizzaName).Price.Value;
         }
     }
 }
