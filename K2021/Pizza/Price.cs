@@ -12,6 +12,17 @@ namespace Pizza
         }
 
         public decimal Value { get; }
+
+
+        public static implicit operator decimal(Price price)
+        {
+            return price.Value;
+        }
+
+        public static implicit operator Price(decimal value)
+        {
+            return new Price(value);
+        }
     }
 
     public class InvalidPriceValueException : Exception

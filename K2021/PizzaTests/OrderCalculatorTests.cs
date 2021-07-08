@@ -1,13 +1,12 @@
 ﻿using NSubstitute;
 using Pizza;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace PizzaTests
 {
-    public class Class1
+    public class OrderCalculatorTests
     {
         [Fact]
         public void NSubstitute_example()
@@ -33,8 +32,8 @@ namespace PizzaTests
         public void For_given_order_should_return_total_price()
         {
             // arrange
-            var menu = TestMenu();
-            var order = TestOrder();
+            var menu = CreateTestMenu();
+            var order = CreateTestOrder();
 
             var orderCalculator = new OrderCalculator(menu);
 
@@ -42,10 +41,14 @@ namespace PizzaTests
             var result = orderCalculator.Calculate(order);
 
             //assert
-            Assert.Equal(60, result.Value);
+            Assert.Equal(60, result.Value);  // without implicit operator
+
+
+            // TODO rozkminic
+            //Assert.Equal(60, result);        // with implicit operator
         }
 
-        private static IOrder TestOrder()
+        private static IOrder CreateTestOrder()
         {
             var order = Substitute.For<IOrder>();
             order.GetEnumerator().Returns(new List<IOrderItem>{
@@ -56,15 +59,16 @@ namespace PizzaTests
             return order;
         }
 
-        private static IMenu TestMenu()
+        private static IMenu CreateTestMenu()
         {
             var menu = Substitute.For<IMenu>();
 
             menu.GetMenu().Returns(new List<IMenuPosition>{
                 new MenuPosition("Hawajska",new Price(60)),
                 new MenuPosition("Domowa",new Price(50)),
-                new MenuPosition("Pepperoni",new Price(20)),
-                new MenuPosition("Margharita",new Price(20))
+                new MenuPosition("Pepperoni",20),  
+                new MenuPosition("Margharita",20)  // <- can write like this because
+                                                   // price has implicit operator
             });
             return menu;
         }
