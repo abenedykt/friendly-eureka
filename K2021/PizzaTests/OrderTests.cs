@@ -110,6 +110,17 @@ namespace PizzaTests
             Assert.Equal(item2, _order.Skip(1).First());
         }
 
+        //[Theory, AutoNSubstitute]
+        //public void When_adding_two_items_order_contains_two_items_v3(IOrderItem item1, IOrderItem item2)
+        //{
+        //    _order.Add(item1);
+        //    _order.Add(item2);
+
+
+        //    Assert.Equal(item1, _order.First());
+        //    Assert.Equal(item2, _order.Skip(1).First());
+        //}
+
 
         //[Fact]
         //public void When_order_is_less_than_minimal_order_should_be_invalid()
