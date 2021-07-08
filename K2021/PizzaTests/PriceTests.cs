@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Pizza;
+using Xunit;
 
 namespace PizzaTests
 {

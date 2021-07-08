@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
-namespace PizzaTests
+[assembly: InternalsVisibleTo("PizzaTests")] // show internals for specific assemlby :D
+
+namespace Pizza
 {
-    public class Order
+    public class Order : IOrder, IEnumerable<IOrderItem>
     {
         private const int PizzaPieces = 8;
         private const int HalfPizzaPieces = 4;
 
-        private readonly IList<OrderItem> items = new List<OrderItem>();
+        private readonly IList<IOrderItem> _items = new List<IOrderItem>();
 
         public bool IsValid()
         {
@@ -18,22 +22,23 @@ namespace PizzaTests
                 && AllPiecessSumToFullPizzas();
         }
 
-        public void Add(OrderItem orderItem)
+        public void Add(IOrderItem orderItem)
         {
-            if (orderItem == null) { 
-                throw new CannotAddNullToOrderException(); 
+            if (orderItem == null)
+            {
+                throw new CannotAddNullToOrderException();
             }
-            items.Add(orderItem);
+            _items.Add(orderItem);
         }
 
         private bool AllPiecessSumToFullPizzas()
         {
-            return items.Sum(i => i.Pieces) % PizzaPieces == 0;
+            return _items.Sum(i => i.Pieces) % PizzaPieces == 0;
         }
 
         private bool PiecesOfSameTypeSumToHalfPizzas()
         {
-            return items.GroupBy(g => g.PizzaName)
+            return _items.GroupBy(g => g.PizzaName)
                                 .Select(g => new
                                 {
                                     Name = g.Key,
@@ -43,19 +48,29 @@ namespace PizzaTests
 
         private bool HasAnythingInOrder()
         {
-            return items != null  && items.Any();
+            return _items != null && _items.Any();
         }
 
 
 
         //private readonly Price MinimalOrderValue = new Price(50);
 
-        internal void Remove(int index)
+        public void Remove(int index)
         {
-            if (index >= 0 && index < items.Count)
+            if (index >= 0 && index < _items.Count)
             {
-                items.RemoveAt(index);
+                _items.RemoveAt(index);
             }
+        }
+
+        public IEnumerator<IOrderItem> GetEnumerator()
+        {
+            return _items.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _items.GetEnumerator();
         }
     }
 

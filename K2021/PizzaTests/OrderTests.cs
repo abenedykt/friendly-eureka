@@ -1,4 +1,7 @@
-﻿using Xunit;
+﻿using Pizza;
+using Xunit;
+using System.Linq;
+using NSubstitute;
 
 namespace PizzaTests
 {
@@ -33,7 +36,7 @@ namespace PizzaTests
             _order.Add(new OrderItem("Pepperoni", 2, "Arek"));
             _order.Add(new OrderItem("Pepperoni", 2, "Marek"));
             _order.Add(new OrderItem("Hawajska", 4, "Darek"));
-            
+
             Assert.True(_order.IsValid());
         }
 
@@ -57,6 +60,55 @@ namespace PizzaTests
             Assert.False(_order.IsValid());
         }
 
+        [Fact]
+        public void When_adding_two_items_order_contains_two_items(){
+            
+            _order.Add(new OrderItem("Pepperoni", 4, "Arek"));
+            _order.Add(new OrderItem("Hawajska", 4, "Marek"));
+
+            Assert.Equal(2, _order.Count());
+
+            // pierwsze podjescie
+            Assert.Equal("Pepperoni", _order.First().PizzaName);
+            Assert.Equal(4, _order.First().Pieces);
+            Assert.Equal("Arek", _order.First().Name);
+
+
+            // drugie podejscie
+            var secondPosition = _order.Skip(1).First();
+            Assert.Equal("Hawajska", secondPosition.PizzaName);
+            Assert.Equal(4, secondPosition.Pieces);
+            Assert.Equal("Marek", secondPosition.Name);
+        }
+
+
+        [Fact]
+        public void When_adding_two_items_order_contains_two_items_v2()
+        {
+            var item1 = new OrderItem("Pepperoni", 4, "Arek");
+            var item2 = new OrderItem("Hawajska", 4, "Marek");
+
+            _order.Add(item1);
+            _order.Add(item2);
+
+
+            Assert.Equal(item1, _order.First());
+            Assert.Equal(item2, _order.Skip(1).First());
+        }
+
+        [Fact]
+        public void When_adding_two_items_order_contains_two_items_v3()
+        {
+            var item1 = Substitute.For<IOrderItem>();
+            var item2 = Substitute.For<IOrderItem>();
+
+            _order.Add(item1);
+            _order.Add(item2);
+
+
+            Assert.Equal(item1, _order.First());
+            Assert.Equal(item2, _order.Skip(1).First());
+        }
 
 
         //[Fact]
@@ -111,6 +163,4 @@ namespace PizzaTests
             Assert.Throws<CannotAddNullToOrderException>(()=>order.Add(null));
         }
     }
-
-
 }

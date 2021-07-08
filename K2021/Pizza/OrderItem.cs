@@ -1,6 +1,6 @@
-﻿namespace PizzaTests
+﻿namespace Pizza
 {
-    public class OrderItem
+    public class OrderItem : IOrderItem
     {
         public OrderItem(string pizzaName, int pieces, string name)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PizzaTests
+namespace Pizza
 {
     public class Price
     {
