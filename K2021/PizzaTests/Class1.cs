@@ -13,8 +13,6 @@ namespace PizzaTests
         public void NSubstitute_example()
         {
             // przykład użycia mocka!!!
-
-
             // mock, stub, fake, test double, 
 
             var menu = Substitute.For<IMenu>();
@@ -32,26 +30,11 @@ namespace PizzaTests
         }
 
         [Fact]
-        public void Calculating_order_price()
+        public void For_given_order_should_return_total_price()
         {
             // arrange
-            var menu = Substitute.For<IMenu>();
-
-            menu.GetMenu().Returns(new[]{
-                new MenuPosition("Hawajska",new Price(60)),
-                new MenuPosition("Domowa",new Price(50)),
-                new MenuPosition("Pepperoni",new Price(20)),
-                new MenuPosition("Margharita",new Price(20))
-            });
-
-            var order = Substitute.For<IOrder>();
-
-            var items = new List<IOrderItem>{
-                new OrderItem("Hawajska", 4, "Arek"),
-                new OrderItem("Pepperoni", 4, "Marek"),
-                new OrderItem("Margharita", 8, "Darek")
-            };
-            order.GetEnumerator().Returns(items.GetEnumerator());
+            var menu = TestMenu();
+            var order = TestOrder();
 
             var orderCalculator = new OrderCalculator(menu);
 
@@ -61,46 +44,29 @@ namespace PizzaTests
             //assert
             Assert.Equal(60, result.Value);
         }
-    }
 
-           
-
-    internal class MenuPosition : IMenuPosition
-    {
-
-        public MenuPosition(string name, Price price )
+        private static IOrder TestOrder()
         {
-            Name = name;
-            Price = price;
+            var order = Substitute.For<IOrder>();
+            order.GetEnumerator().Returns(new List<IOrderItem>{
+                new OrderItem("Hawajska", 4, "Arek"),
+                new OrderItem("Pepperoni", 4, "Marek"),
+                new OrderItem("Margharita", 8, "Darek")
+            }.GetEnumerator());
+            return order;
         }
 
-        public string Name { get; }
-        public Price Price { get; }
-    }
-
-    public class OrderCalculator
-    {
-        private const int PizzaPieces = 8;
-        private readonly IMenu _menu;
-
-        public OrderCalculator(IMenu menu)
+        private static IMenu TestMenu()
         {
-            _menu = menu;
-        }
+            var menu = Substitute.For<IMenu>();
 
-        internal Price Calculate(IOrder order)
-        {
-            return new Price(order.Sum(o => o.Pieces * PriceOfSlice(o.PizzaName).Value));
-        }
-
-        private Price PriceOfSlice(string pizzaName)
-        {
-            return new Price(PizzaPrice(pizzaName) / PizzaPieces);
-        }
-
-        private decimal PizzaPrice(string pizzaName)
-        {
-            return _menu.GetMenu().First(x => x.Name == pizzaName).Price.Value;
+            menu.GetMenu().Returns(new List<IMenuPosition>{
+                new MenuPosition("Hawajska",new Price(60)),
+                new MenuPosition("Domowa",new Price(50)),
+                new MenuPosition("Pepperoni",new Price(20)),
+                new MenuPosition("Margharita",new Price(20))
+            });
+            return menu;
         }
     }
 }
