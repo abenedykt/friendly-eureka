@@ -1,6 +1,4 @@
-﻿using Pizza;
-
-namespace PizzaApp
+﻿namespace Pizza
 {
     public interface IFactory
     {

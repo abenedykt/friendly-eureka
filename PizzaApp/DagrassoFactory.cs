@@ -2,7 +2,7 @@
 
 namespace PizzaApp
 {
-    public class ColorataFactory : IFactory
+    public class DagrassoFactory: IFactory
     {
         public IOrder CreateNewOrder()
         {
@@ -16,7 +16,7 @@ namespace PizzaApp
 
         public IOrderCalculator GetOrderCalculator()
         {
-            return new OrderCalculator(GetMenu());
+            return new FancyOrderCalculator(GetMenu());
         }
     }
 }

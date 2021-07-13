@@ -2,19 +2,19 @@
 
 namespace Pizza
 {
-    public class OrderCalculator : IOrderCalculator
+    public class FancyOrderCalculator : IOrderCalculator
     {
         private const int PizzaPieces = 8;
         private readonly IMenu _menu;
 
-        public OrderCalculator(IMenu menu)
+        public FancyOrderCalculator(IMenu menu)
         {
             _menu = menu;
         }
 
         public Price Calculate(IOrder order)
         {
-            return new Price(order.Sum(o => o.Pieces * PriceOfSlice(o.PizzaName).Value));
+            return new Price(order.Sum(o => o.Pieces * PriceOfSlice(o.PizzaName).Value) + 5);
         }
 
         private Price PriceOfSlice(string pizzaName)
