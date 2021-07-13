@@ -23,6 +23,18 @@ namespace Pizza
         {
             return new Price(value);
         }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Price);
+        }
+
+        public bool Equals(Price other)
+        {
+            return other != null &&
+                   Value == other.Value; 
+        }
+        
     }
 
     public class InvalidPriceValueException : Exception

@@ -11,8 +11,12 @@ namespace PizzaTests
         [Fact]
         public void NSubstitute_example()
         {
-            // przykład użycia mocka!!!
-            // mock, stub, fake, test double, 
+            // its just an example of how to use mocks!!!
+            // mock, stub, fake, dummy, test double, spie, 
+            //
+            // some reading for curious ones:
+            // https://martinfowler.com/bliki/TestDouble.html
+            // https://martinfowler.com/articles/mocksArentStubs.html
 
             var menu = Substitute.For<IMenu>();
 
@@ -23,7 +27,7 @@ namespace PizzaTests
 
             var x = menu.GetMenu().First();
             Assert.NotNull(x);
-            // debug x 
+            // go on and inspect x while debuging
 
             menu.Received(1).GetMenu();
         }
@@ -43,9 +47,10 @@ namespace PizzaTests
             //assert
             Assert.Equal(60, result.Value);  // without implicit operator
 
+            Assert.Equal(60, result);        // with implicit operator
+            Assert.Equal(60,result, 1);
 
-            // TODO rozkminic
-            //Assert.Equal(60, result);        // with implicit operator
+            Assert.True(60 == result);       // with implicit operator
         }
 
         private static IOrder CreateTestOrder()
