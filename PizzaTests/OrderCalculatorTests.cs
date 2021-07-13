@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using Pizza;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -39,6 +40,16 @@ namespace PizzaTests
             var menu = CreateTestMenu();
             var order = CreateTestOrder();
 
+
+            //var order = OrderBuilder.WithClient("2445")
+            //    .AndOrderPosition(new OrderItem("", 1, ""))
+            //    .AndOrderPosition(new OrderItem("", 2, ""))
+            //    .AndOrderPosition(new OrderItem("", 3, ""))
+            //    .AndOrderPosition(new OrderItem("", 1, ""))
+            //    .AndShipping("sdff", "sdfd")
+            //    .Build();
+
+
             var orderCalculator = new OrderCalculator(menu);
 
             // act
@@ -76,6 +87,24 @@ namespace PizzaTests
                                                    // price has implicit operator
             });
             return menu;
+        }
+    }
+
+    public class OrderBuilder
+    {
+
+        //public static CreateOrder WithClient(string v)
+        //{
+        //}
+
+        //public static CreateOrder AndOrderPosition(IOrderItem orderItem)
+        //{
+        //}
+
+        public IOrder Build()
+        {
+
+            return new Order(); // <- 
         }
     }
 }

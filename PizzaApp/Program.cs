@@ -21,7 +21,7 @@ namespace PizzaApp
 
             ShowMenu(menu);
             Console.WriteLine($"Order is valid = {order.IsValid()}");
-            Console.WriteLine($"order value = {orderCalculator.Calculate(order).Value}");
+            Console.WriteLine($"Order value = {orderCalculator.Calculate(order).Value}");
         }
 
         private static void ShowMenu(IMenu menu)
