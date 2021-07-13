@@ -1,11 +1,10 @@
-﻿using Pizza;
-using System;
+﻿using System;
 
 namespace Pizza
 {
     public interface IOrderRepository
     {
-        IOrder GetOrder(Guid orderId);
+        IOrder Get(Guid orderId);
         void Update(IOrder order);
     }
 }

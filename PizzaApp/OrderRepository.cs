@@ -7,16 +7,20 @@ namespace PizzaApp
 {
     public class OrderRepository : IOrderRepository
     {
-        private List<IOrder> _orders = new List<IOrder>();
+        private readonly List<IOrder> _orders = new List<IOrder>();
 
-        public  IOrder GetOrder(Guid orderId)
+        public IOrder Get(Guid orderId)
         {
             return _orders.FirstOrDefault(o => o.OrderId == orderId);
         }
 
         public void Update(IOrder order)
         {
-            // skrót myslowy :)
+            // skrót myslowy :) <- działa bo uzywamy referencji w tej konkretnej implementacji
+
+            // convert
+            // find/attach
+            // .SaveChanges()
         }
     }
 }

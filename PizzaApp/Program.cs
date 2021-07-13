@@ -8,7 +8,6 @@ namespace PizzaApp
     {
         static void Main()
         {
-
             IFactory factory = new DagrassoFactory();
 
             IMenu menu = factory.GetMenu();

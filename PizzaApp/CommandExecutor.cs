@@ -11,7 +11,6 @@ namespace PizzaApp
             {
                 if (command.CanExecute())
                 {
-                    var start = new Stopwatch();
                     try
                     {
                         command.Execute();
@@ -23,10 +22,6 @@ namespace PizzaApp
                         // Microsoft.Logging
                         // -> serilog
                     }
-
-
-                    var elapsed = start.ElapsedMilliseconds;
-                    // log -> command.GetType() + elapsed
                 }
             }
         }
