@@ -8,10 +8,18 @@ namespace PizzaApp
     {
         static void Main()
         {
+
             IFactory factory = new DagrassoFactory();
 
             IMenu menu = factory.GetMenu();
             var order = factory.CreateNewOrder();
+
+            var @params = new AddToOrderParams(); // ? 
+            var addToOrder = new AddToOrderCommand(@params, factory.OrderRepository()); 
+
+            var executor = new CommandExecutor();
+            executor.Execute(addToOrder);
+
 
             order.Add(new OrderItem(menu.GetMenu().First().Name, 4, "Arek"));
             order.Add(new OrderItem(menu.GetMenu().Skip(1).First().Name, 8, "Darek"));
@@ -32,24 +40,4 @@ namespace PizzaApp
             }
         }
     }
-
-    //public class SqlMenuRepository : IMenu
-    //{
-
-    //}
-
-    //public class MongoMenuRepository : IMenu
-    //{
-
-    //}
-
-    //public class FileMenuRepository : IMenu
-    //{
-
-    //}
-
-    //public class SqlMenuRepository : IMenu
-    //{
-
-    //}
 }

@@ -18,5 +18,10 @@ namespace PizzaApp
         {
             return new FancyOrderCalculator(GetMenu());
         }
+
+        public IOrderRepository OrderRepository()
+        {
+            return new OrderRepository();
+        }
     }
 }

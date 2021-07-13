@@ -15,6 +15,8 @@ namespace Pizza
 
         private readonly IList<IOrderItem> _items = new List<IOrderItem>();
 
+        public Guid OrderId => throw new NotImplementedException(); // ? 
+
         public bool IsValid()
         {
             return HasAnythingInOrder()
