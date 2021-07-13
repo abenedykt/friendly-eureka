@@ -12,6 +12,5 @@
         public string PizzaName { get; }
         public int Pieces { get; }
         public string Name { get; }
-
     }
 }

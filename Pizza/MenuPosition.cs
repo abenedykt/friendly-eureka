@@ -2,7 +2,7 @@
 
 namespace Pizza
 {
-    internal class MenuPosition : IMenuPosition
+    public class MenuPosition : IMenuPosition
     {
 
         public MenuPosition(string name, Price price )

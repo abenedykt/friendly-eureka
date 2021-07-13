@@ -48,7 +48,7 @@ namespace PizzaTests
             Assert.Equal(60, result.Value);  // without implicit operator
 
             Assert.Equal(60, result);        // with implicit operator
-            Assert.Equal(60,result, 1);
+            Assert.Equal(60, result, 2);
 
             Assert.True(60 == result);       // with implicit operator
         }
