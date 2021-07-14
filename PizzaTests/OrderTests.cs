@@ -21,7 +21,7 @@ namespace PizzaTests
 
         public OrderTests()
         {
-            _order = new Order();
+            _order = Order.NewOrder();
         }
 
         [Fact]
@@ -169,7 +169,7 @@ namespace PizzaTests
         [Fact]
         public void When_trying_to_add_null_to_order_should_throw_cannot_add_null_to_order_exception()
         {
-            var order = new Order();
+            var order = Order.NewOrder();
 
             Assert.Throws<CannotAddNullToOrderException>(()=>order.Add(null));
         }

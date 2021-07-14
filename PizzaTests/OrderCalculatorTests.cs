@@ -104,7 +104,7 @@ namespace PizzaTests
         public IOrder Build()
         {
 
-            return new Order(); // <- 
+            return Order.NewOrder(); // <- 
         }
     }
 }

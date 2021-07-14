@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PizzaApp\PizzaApp.csproj" />
     <ProjectReference Include="..\Pizza\Pizza.csproj" />
   </ItemGroup>
 

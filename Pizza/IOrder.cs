@@ -5,7 +5,7 @@ namespace Pizza
 {
     public interface IOrder: IEnumerable<IOrderItem>
     {
-        Guid OrderId { get; }
+        Guid Id { get; }
         void Add(IOrderItem orderItem);
         bool IsValid();
         void Remove(int index);

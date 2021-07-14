@@ -1,26 +1,24 @@
 ﻿using Pizza;
 using System;
+using System.Collections.Generic;
 
 namespace PizzaApp
 {
-    public class AddToOrderCommand : ICommand
+    public class AddToOrderCommand : ICommand<AddToOrderParams, IOrder>
     {
-        private readonly AddToOrderParams _parameters;
         private readonly IOrderRepository _orderRepository;
 
-        public AddToOrderCommand(AddToOrderParams parameters, IOrderRepository repository)
+        public AddToOrderCommand(IOrderRepository repository)
         {
-            _parameters = parameters;
             _orderRepository = repository;
         }
 
-
-        public bool CanExecute()
+        public bool CanExecute(AddToOrderParams @params)
         {
-            return _parameters != null
-                && _parameters.OrderItem != null
-                && _parameters.OrderId != null
-                && OrderExists(_parameters.OrderId);
+            return @params != null
+                && @params.OrderItem != null
+                && @params.OrderId != null
+                && OrderExists(@params.OrderId);
         }
 
         private bool OrderExists(Guid orderId)
@@ -28,11 +26,13 @@ namespace PizzaApp
             return _orderRepository.Get(orderId) != null;
         }
 
-        public void Execute()
+        public IOrder Execute(AddToOrderParams @params)
         {
-            var order = _orderRepository.Get(_parameters.OrderId);
-            order.Add(_parameters.OrderItem);
+            var order = _orderRepository.Get(@params.OrderId);
+            order.Add(@params.OrderItem);
             _orderRepository.Update(order);
+
+            return order;
         }
     }
 }

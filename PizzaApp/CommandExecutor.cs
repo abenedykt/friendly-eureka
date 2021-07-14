@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace PizzaApp
 {
     public class CommandExecutor
     {
-        public void Execute(ICommand command)
+        public TResult Execute<TParam, TResult>(ICommand<TParam,TResult> command, TParam parameters)
         {
             if(command != null)
             {
-                if (command.CanExecute())
+                if (command.CanExecute(parameters))
                 {
                     try
                     {
-                        command.Execute();
+                        return command.Execute(parameters);
                     }
                     catch (Exception e)
                     {
@@ -24,6 +23,17 @@ namespace PizzaApp
                     }
                 }
             }
+
+            return default;  // to tak nie powinno wyglądać
         }
     }
+
+
+
+
+
+    //public interface ICommandExecutor
+    //{
+    //    TResult Execute<TParam, TResult>(ICommand<TParam, TResult> command, TParam param);
+    //}
 }

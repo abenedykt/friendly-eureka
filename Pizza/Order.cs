@@ -15,13 +15,23 @@ namespace Pizza
 
         private readonly IList<IOrderItem> _items = new List<IOrderItem>();
 
-        public Guid OrderId => throw new NotImplementedException(); // ? 
+        private Order(Guid newGuid)
+        {
+            Id = newGuid;
+        }
+
+        public Guid Id { get; }
 
         public bool IsValid()
         {
             return HasAnythingInOrder()
                 && PiecesOfSameTypeSumToHalfPizzas()
                 && AllPiecessSumToFullPizzas();
+        }
+
+        public static Order NewOrder()
+        {
+            return new Order(Guid.NewGuid());
         }
 
         public void Add(IOrderItem orderItem)

@@ -6,7 +6,7 @@ namespace PizzaApp
     {
         public IOrder CreateNewOrder()
         {
-            return new Order();
+            return Order.NewOrder();
         }
 
         public IMenu GetMenu()

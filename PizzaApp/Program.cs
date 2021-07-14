@@ -9,20 +9,24 @@ namespace PizzaApp
         static void Main()
         {
             IFactory factory = new DagrassoFactory();
-
             IMenu menu = factory.GetMenu();
-            var order = factory.CreateNewOrder();
-
-            var @params = new AddToOrderParams(); // ? 
-            var addToOrder = new AddToOrderCommand(@params, factory.OrderRepository()); 
-
             var executor = new CommandExecutor();
-            executor.Execute(addToOrder);
+
+            // tworzenie nowego zamowienie
+            var newOrderParams = new CreateNewOrderParams();
+            var newOrder = new CreateNewOrderCommand(factory.OrderRepository());
+            var orderId = executor.Execute(newOrder, newOrderParams);
+
+            // dodanie pozycji do zamowienia
+            var addToOrderParams = new AddToOrderParams
+            {
+                OrderId = orderId,
+                OrderItem = new OrderItem(menu.GetMenu().First().Name, 4, "Arek")
+            };
+            var addToOrder = new AddToOrderCommand(factory.OrderRepository()); 
+            var order = executor.Execute(addToOrder, addToOrderParams);
 
 
-            order.Add(new OrderItem(menu.GetMenu().First().Name, 4, "Arek"));
-            order.Add(new OrderItem(menu.GetMenu().Skip(1).First().Name, 8, "Darek"));
-            order.Add(new OrderItem(menu.GetMenu().Skip(2).First().Name, 4, "Marek"));
 
             var orderCalculator = factory.GetOrderCalculator();
 
