@@ -5,7 +5,13 @@ namespace PizzaApp
 {
     public class AddToOrderParams
     {
-        public Guid OrderId { get; set; }
-        public IOrderItem OrderItem { get; set; }
+        public AddToOrderParams(Guid orderId, IOrderItem orderItem)
+        {
+            OrderId = orderId;
+            OrderItem = orderItem;
+        }
+
+        public Guid OrderId { get; }
+        public IOrderItem OrderItem { get; }
     }
 }
