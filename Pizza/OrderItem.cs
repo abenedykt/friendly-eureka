@@ -2,7 +2,7 @@
 {
     public class OrderItem : IOrderItem
     {
-        public OrderItem(string pizzaName, int pieces, string name)
+        public OrderItem(string pizzaName, uint pieces, string name)
         {
             PizzaName = pizzaName;
             Pieces = pieces;
@@ -10,7 +10,7 @@
         }
 
         public string PizzaName { get; }
-        public int Pieces { get; }
+        public uint Pieces { get; }
         public string Name { get; }
     }
 }

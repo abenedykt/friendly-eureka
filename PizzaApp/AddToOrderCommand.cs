@@ -1,6 +1,5 @@
 ﻿using Pizza;
 using System;
-using System.Collections.Generic;
 
 namespace PizzaApp
 {

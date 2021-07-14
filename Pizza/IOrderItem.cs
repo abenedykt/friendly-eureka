@@ -3,7 +3,7 @@
     public interface IOrderItem
     {
         string Name { get; }
-        int Pieces { get; }
+        uint Pieces { get; }
         string PizzaName { get; }
     }
 }
